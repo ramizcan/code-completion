@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kod Tamamlama Test Arayüzü</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            font-family: monospace;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kod Tamamlama Test Arayüzü</h1>
+    <p>Modelin sağlığını kontrol etmek için kodunuzu girin ve "Kod Tamamla" butonuna tıklayın.</p>
+    
+    <textarea id="kodGirisi" placeholder="Kodunuzu buraya yazın..."></textarea>
+    <br><br>
+    <button onclick="kodTamamla()">Kod Tamamla</button>
+    <br><br>
+    <h2>Çıktı:</h2>
+    <pre id="kodCiktisi"></pre>
+
+    <script>
+        function kodTamamla() {
+            let kod = document.getElementById("kodGirisi").value;
+
+            fetch("/tahmin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ kod: kod })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.tahmin) {
+                    document.getElementById("kodCiktisi").innerText = data.tahmin;
+                } else {
+                    document.getElementById("kodCiktisi").innerText = "Hata: " + (data.error || "Tahmin alınamadı");
+                }
+            })
+            .catch(error => {
+                document.getElementById("kodCiktisi").innerText = "İstek hatası: " + error.message;
+            });
+        }
+    </script>
+</body>
+</html>

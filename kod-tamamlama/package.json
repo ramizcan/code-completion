@@ -1,0 +1,47 @@
+{
+  "name": "kod-tamamlama",
+  "displayName": "Kod Tamamlama",
+  "description": "Yapay zeka ile kod tamamlama uzantısı",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.getPrediction"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.getPrediction",
+        "title": "Kod Tamamlama Önerisi Al"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "extension.getPrediction",
+        "key": "ctrl+space",  
+        "mac": "cmd+space",  
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.60.0",
+    "@types/node": "^16.11.7",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
